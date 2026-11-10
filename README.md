@@ -1,13 +1,36 @@
-# qh-starter
-This repository is a template for GitHub Codespaces that installs:
-- opencode (installed via pip by default — adjust if your install differs)
-- jieba
-- qhchina
-- numpy
-- matplotlib
-- scikit-learn
-- plotly
+# CHI3242 Assignment 2: 《紅樓夢》句子層面的情感二分
 
-Files:
-- hongloumeng.txt — 紅樓夢
-- .devcontainer/ — devcontainer config and setup script
+## 研究問題
+
+本專案以邏輯迴歸分類器，嘗試從句子層面區分《紅樓夢》文本中的「正面」與「負面」情感。重點不在追求高準確率，而在觀察模型在何處失效，以及這些失效是否反映出《紅樓夢》情感表達的複雜性。
+
+## 標籤定義
+
+- **positive（正面）**：整體呈現喜悅、溫暖、親情、歡宴、親密或希望氛圍的句子。
+- **negative（負面）**：表達悲傷、痛苦、怨恨、衝突、淒涼或無奈的句子。
+- 情感模糊或中性的句子不納入訓練資料。
+
+分析單位為句子。
+
+## 資料來源與處理
+
+- 原始文本：`红楼梦.txt`（《紅樓夢》全文）
+- 初步標註：從原文切句後，篩選有明顯情感傾向的句子，產生 `data/sentiment_labels.csv`（正面 388 句、負面 842 句）
+- 平衡後資料：`data/sentiment_balanced.csv`（正面與負面各 388 句，負面以 `random_state=42` 隨機抽樣）
+- 分析文本：第27–28回黛玉葬花及寶玉反應段落，存於 `data/analysis_text.txt`
+
+## 方法
+
+1. 使用 `jieba` 進行中文分詞
+2. 以 `TfidfVectorizer`（`max_features=2000`）將句子轉為向量
+3. 訓練 `LogisticRegression`
+4. 資料以 80% 訓練、20% 測試進行分層切分（`random_state=42`）
+
+## 主要結果
+
+- 測試集準確率：88.46%
+- 負面句子召回率高（0.987），正面句子召回率較低（0.782）
+- 模型對直接負面情緒辨識較穩定，對含蓄或語氣複雜的正面表達較易誤判
+
+## 檔案結構
+

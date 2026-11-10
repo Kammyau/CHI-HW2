@@ -1,0 +1,19 @@
+Accuracy: 0.8846
+
+Classification Report:
+              precision    recall  f1-score   support
+
+    negative     0.8191    0.9872    0.8953        78
+    positive     0.9839    0.7821    0.8714        78
+
+    accuracy                         0.8846       156
+   macro avg     0.9015    0.8846    0.8834       156
+weighted avg     0.9015    0.8846    0.8834       156
+
+
+Confusion Matrix (labels=['positive', 'negative']):
+[[61 17]
+ [ 1 77]]
+
+訓練集筆數: 620，測試集筆數: 156
+特徵維度: 2000
